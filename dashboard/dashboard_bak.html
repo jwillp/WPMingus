@@ -1,6 +1,120 @@
-<div class="dashboard-container">
-    <h1>WPMingus Dashboard</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/framy/latest/css/framy.min.css">
+
+    <style type="text/css">
+
+        body, html {
+            height: 100%;
+        }
+
+        .box {
+            min-width: 10px;
+            border: 1px solid #d9d8de;
+            background-color: #FFF;
+            border-radius: 2px;
+            margin-bottom: 20px;
+        }
+
+        .box-title {
+            border-bottom: 1px solid #d9d8de;
+            padding-left: 10px;
+            font-weight: bold;
+        }
+
+        .box-content {
+            padding: 10px;
+        }
+
+
+        .box-content h5 {
+            text-align: center;
+        }
+
+        .container  {
+            margin: auto;
+            background-color: #fafafa;
+            width: 100%;
+            height: 100%;
+        }
+
+        .plugin-list {
+            width: 100%;
+        }
+
+        .plugin-list .plugin {
+            border-bottom: 1px solid #d9d8de;
+            height: 30px;
+        }
+
+        .plugin-list .plugin td {
+            text-align: right;
+            vertical-align: middle
+        }
+
+        .plugin-list .plugin .plugin-name {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .plugin-list .plugin .plugin-version, 
+        .plugin-list .plugin .icon, 
+        .plugin-icon-arrow,
+        .plugin-list .plugin .plugin-latest-version {
+            margin-right: 10px;
+            max-width: 50px;
+            width: 35px;
+        }
+
+        .plugin-icon-arrow {
+            width: 30px;
+            max-width: 30px;
+        }
+
+        .plugin-list .plugin .plugin-latest-version {
+            color: #4ce276;
+            font-weight: bold;
+        }
+
+        .plugin-list .plugin .button-update {
+            width: 80px;
+            max-width:  80px;
+        }
+
+        .circle-graph {
+            position: relative;
+            margin: auto;
+            text-align: center;
+        }
+
+        .circle-graph-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 30px;
+        }   
+
+        .inner-box {
+            border: 1px solid #d9d8de;
+            border-bottom: 3px solid #d9d8de;
+            padding: 5px;
+            background-color: #F1F3F6;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    
     <div class="columns">
+
+
         <div class="md-6">
 
 
@@ -43,14 +157,14 @@
                         <tr class="plugin">
                             <td class="plugin-name">Akismet</td>
                             <td class="plugin-version">2.8.4.56</td>
-                            <td class="plugin-icon-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></i></td>
+                            <td class="plugin-icon-arrow"><i class="icon icon-arrow-right-b sm"></i></td>
                             <td class="plugin-latest-version"> 3.2.4.2</td>
                             <td class="button-update"><a href="#" class="button sm">Update</a></td>
                         </tr>
                         <tr class="plugin">
                             <td class="plugin-name">Akismet</td>
                             <td class="plugin-version">2.8.4.56</td>
-                            <td class="plugin-icon-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></i></td>
+                            <td class="plugin-icon-arrow"><i class="icon icon-arrow-right-b sm"></i></td>
                             <td class="plugin-latest-version"> 3.2.4.2</td>
                             <td class="button-update"><a href="#" class="button sm">Update</a></td>
                         </tr>
@@ -126,4 +240,34 @@
 
     </div><!-- columns -->
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/circle-progress.min.js"></script>
+<script type="text/javascript">
+(function($) {
+    var updatesGraph = $('.updates-graph');
+    updatesGraph.circleProgress({
+        value: updatesGraph.attr('data-value') / 100,
+        fill: updatesGraph.attr('data-color'),
+        size: 175,
+      }).on('circle-animation-progress', function(event, progress) {
+        console.log(progress);
+        $(this).find('.update-graph-content').html(Math.round(progress * updatesGraph.attr('data-value')) + '<i>%</i>');
+    });
 
+
+    var uptimeGraph = $('.uptime-graph');
+    uptimeGraph.circleProgress({
+        value: 100,
+        fill: uptimeGraph.attr('data-value') == 'true' ? "#4ce276" : "#f36362", // true = up
+        size: 125,
+      }).on('circle-animation-progress', function(event, progress) {
+        displayText = uptimeGraph.attr('data-value') == 'true' ? "UP" : "DOWN";
+        $(this).find('.uptime-graph-content').html(displayText);
+    });
+
+
+
+})(jQuery);
+</script>
+</body>
+</html>
